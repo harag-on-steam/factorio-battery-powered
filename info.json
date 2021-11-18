@@ -1,0 +1,20 @@
+{
+    "name": "battery-powered",
+    "version": "0.1.0",
+    "title": "Battery Powered",
+    "description": "Provides several tiers of batteries that can be used as fuel and to transport energy. The highest tiers require Space Exploration.",
+    "author": "Harag",
+    "contact": "none",
+    "factorio_version": "1.1",
+    "dependencies": [
+        "base",
+        "? deadlock-beltboxes-loaders >= 2.4.0",
+        "? space-exploration",
+        "? Deadlock-SE-bridge",
+        "(?) DeadlockStackingForVanilla",
+        "? angelsaddons-mobility"
+    ],
+    "package": {
+        "ignore": [".git", ".github", ".vscode", ".kakrc", "*.xcf", "*.kra"]
+    }
+}

@@ -1,0 +1,59 @@
+{
+    "entity" : [
+        [ "iron-battery-charger", "bp-battery-charger" ],
+        [ "iron-battery-discharger", "bp-battery-discharger" ],
+        [ "holmium-battery-charger", "bp-holmium-battery-charger" ],
+        [ "holmium-battery-discharger", "bp-holmium-battery-discharger" ],
+        [ "naquium-battery-charger", "bp-naquium-battery-charger" ],
+        [ "naquium-battery-discharger", "bp-naquium-battery-discharger" ]
+    ],
+    "item" : [
+        [ "iron-battery-charger", "bp-battery-charger" ],
+        [ "iron-battery-discharger", "bp-battery-discharger" ],
+        [ "holmium-battery-charger", "bp-holmium-battery-charger" ],
+        [ "holmium-battery-discharger", "bp-holmium-battery-discharger" ],
+        [ "naquium-battery-charger", "bp-naquium-battery-charger" ],
+        [ "naquium-battery-discharger", "bp-naquium-battery-discharger" ],
+
+        [ "advanced-battery", "bp-advanced-battery" ],
+        [ "holmium-battery", "bp-holmium-battery" ],
+        [ "naquium-battery", "bp-naquium-battery" ],
+
+        [ "charged-battery", "bp-charged-battery" ],
+        [ "charged-advanced-battery", "bp-charged-advanced-battery" ],
+        [ "charged-holmium-battery", "bp-charged-holmium-battery" ],
+        [ "charged-naquium-battery", "bp-charged-naquium-battery" ],
+
+        [ "deadlock-stack-battery", "deadlock-stack-bp-charged-battery" ],
+        [ "deadlock-stack-advanced-battery", "deadlock-stack-bp-advanced-battery" ],
+        [ "deadlock-stack-holmium-battery", "deadlock-stack-bp-holmium-battery" ],
+        [ "deadlock-stack-naquium-battery", "deadlock-stack-bp-naquium-battery" ]
+    ],
+    "recipe" : [
+        [ "iron-battery-charger", "bp-battery-charger" ],
+        [ "iron-battery-discharger", "bp-battery-discharger" ],
+        [ "holmium-battery-charger", "bp-holmium-battery-charger" ],
+        [ "holmium-battery-discharger", "bp-holmium-battery-discharger" ],
+        [ "naquium-battery-charger", "bp-naquium-battery-charger" ],
+        [ "naquium-battery-discharger", "bp-naquium-battery-discharger" ],
+
+        [ "advanced-battery", "bp-advanced-battery" ],
+        [ "holmium-battery", "bp-holmium-battery" ],
+        [ "naquium-battery", "bp-naquium-battery" ],
+
+        [ "charged-battery", "bp-charged-battery" ],
+        [ "charged-advanced-battery", "bp-charged-advanced-battery" ],
+        [ "charged-holmium-battery", "bp-charged-holmium-battery" ],
+        [ "charged-naquium-battery", "bp-charged-naquium-battery" ],
+
+        [ "deadlock-stacks-stack-battery", "deadlock-stacks-stack-bp-charged-battery" ],
+        [ "deadlock-stacks-stack-advanced-battery", "deadlock-stacks-stack-bp-advanced-battery" ],
+        [ "deadlock-stacks-stack-holmium-battery", "deadlock-stacks-stack-bp-holmium-battery" ],
+        [ "deadlock-stacks-stack-naquium-battery", "deadlock-stacks-stack-bp-naquium-battery" ],
+
+        [ "deadlock-stacks-unstack-battery", "deadlock-stacks-unstack-bp-charged-battery" ],
+        [ "deadlock-stacks-unstack-advanced-battery", "deadlock-stacks-unstack-bp-advanced-battery" ],
+        [ "deadlock-stacks-unstack-holmium-battery", "deadlock-stacks-unstack-bp-holmium-battery" ],
+        [ "deadlock-stacks-unstack-naquium-battery", "deadlock-stacks-unstack-bp-naquium-battery" ]
+    ]
+}
