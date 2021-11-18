@@ -200,7 +200,7 @@ local charger_discharger = function(p)
         result_count = 1,
         category = "crafting",
         enabled = false,
-        ingredients = p.ingredients,
+        ingredients = p.ingredients or p.ingredients_charger,
         energy_required = 8,
     }
 
@@ -281,7 +281,7 @@ local charger_discharger = function(p)
         result_count = 1,
         category = "crafting",
         enabled = false,
-        ingredients = p.ingredients,
+        ingredients = p.ingredients or p.ingredients_discharger,
         energy_required = 8,
     }
     data:extend({ 
@@ -298,8 +298,9 @@ charger_discharger({
     based_on = "accumulator",
     order = "a",
     ingredients = {
-        {"accumulator", 1},
+        {"copper-cable", 30},
         {"electronic-circuit", 2},
+        {"iron-plate", 2},
     },        
     crafting_speed = 0.5,
     energy_usage = "500kW",
@@ -311,9 +312,17 @@ if mods["space-exploration"] then
         prefix = "holmium",
         based_on = "se-space-accumulator",
         order = "b",
-        ingredients = {
-            {"se-space-accumulator", 1},
+        ingredients_charger = {
+            {"se-heavy-girder", 6},
+            {"se-holmium-cable", 40},
             {"processing-unit", 2},
+            {"bp-battery-charger", 1},
+        },
+        ingredients_discharger = {
+          {"se-heavy-girder", 6},
+          {"se-holmium-cable", 40},
+          {"processing-unit", 2},
+          {"bp-battery-discharger", 1},
         },
         crafting_speed = 2.5,
         energy_usage = "2500kW",
@@ -323,9 +332,17 @@ if mods["space-exploration"] then
     charger_discharger({
         prefix = "naquium",
         based_on = "se-space-accumulator-2",
-        ingredients = {
-            {"se-space-accumulator-2", 1},
-            {"se-quantum-processor", 1},
+        ingredients_charger = {
+          {"se-superconductive-cable", 8},
+          {"se-naquium-cube", 1},
+          {"se-quantum-processor", 1},
+          {"bp-holmium-battery-charger", 1},
+        },
+        ingredients_discharger = {
+          {"se-superconductive-cable", 8},
+          {"se-naquium-cube", 1},
+          {"se-quantum-processor", 1},
+          {"bp-holmium-battery-discharger", 1},
         },
         order = "c",
         crafting_speed = 10,
