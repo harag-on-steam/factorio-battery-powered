@@ -3,6 +3,8 @@ data:extend({
     { type = "fuel-category",   name = "battery",  },
 })
 
+local data_util = mods["space-exploration"] and require("__space-exploration__.data_util")
+
 local group = "intermediate-products"
 
 local subgroup = "intermediate-product"
@@ -95,6 +97,38 @@ local create_battery = function (p)
         add_unlock_to_tech(p.tech, name)
         add_unlock_to_tech(p.tech, name_charged)
     end
+
+    if mods["space-exploration"] and p.scrap then
+
+        local scrap_battery = {
+            type = "recipe",
+            name = string.gsub(name, "^bp", "bp-recycle"),
+            localised_name = { "recipe-name.se-generic-recycling", { "item-name."..name} },
+            icons = data_util.transition_icons(
+                {
+                    icon = battery.icon,
+                    icon_size = battery.icon_size, scale = 0.5
+                },
+                {
+                    icon = data.raw.item[data_util.mod_prefix .. "scrap"].icon,
+                    icon_size = data.raw.item[data_util.mod_prefix .. "scrap"].icon_size, scale = 0.5
+                }),
+            -- icon = battery_powered.icon_path .. name .. ".png",
+            -- icon_size = battery_powered.icon_size,
+            -- icon_mipmaps = battery_powered.icon_mipmaps,
+            results = p.scrap,
+            order = "h[battery]-a-"..p.order,
+            category = "hard-recycling",
+            subgroup = subgroup,
+            enabled = false,
+            ingredients = {{type = "item", name = name, amount = 1}},
+            energy_required = 4,
+            allow_decomposition = false,
+        }
+
+        data:extend({scrap_battery})
+        add_unlock_to_tech(p.tech, scrap_battery.name)
+    end
 end
 
 create_battery({
@@ -120,6 +154,11 @@ create_battery({
         {type = "item",  name = "plastic-bar",   amount =  2},
         {type = "fluid", name = "sulfuric-acid", amount = 40},
     },
+    scrap = {
+        {type = "item",  name = "se-scrap",      amount     = 1},
+        {type = "item",  name = "copper-plate",  amount_min = 1, amount_max  = 2},
+        {type = "item",  name = "plastic-bar",   amount_min = 1, amount_max  = 2},
+    },
     probability = 0.99,
     recipe_tint = {0xE6,0xBA,0x39},
     order = "b",
@@ -142,10 +181,15 @@ if mods["space-exploration"] then
             {type = "item",  name = "se-vitalic-acid",   amount =   1},
             {type = "fluid", name = "se-ion-stream",     amount =  20},
         },
+        scrap = {
+            {type = "item",  name = "se-heat-shielding", amount     = 1, probability = 0.75},
+            {type = "item",  name = "se-scrap",          amount     = 1},
+            {type = "item",  name = "se-holmium-plate",  amount_min = 1, amount_max  = 2},
+        },
         probability = 0.995,
         recipe_tint = {0xec, 0x69, 0xab},
         order = "c",
-        -- half the energy density of rocket fuel, same acceleration and speed
+        -- same energy density as rocket fuel, same acceleration and speed
         stack = 20,
         fuel = 50,
         acceleration = 1.80,
@@ -161,6 +205,11 @@ if mods["space-exploration"] then
             {type = "item",  name = "se-self-sealing-gel",        amount =  1},
             {type = "item",  name = "se-superconductive-cable",   amount =  1},
             {type = "fluid", name = "se-proton-stream",           amount =  20},
+        },
+        scrap = {
+            {type = "item",  name = "se-lattice-pressure-vessel", amount     = 1, probability = 0.75},
+            {type = "item",  name = "se-scrap",                   amount     = 1},
+            {type = "item",  name = "se-naquium-plate",           amount_min = 1, amount_max  = 2},
         },
         probability = 0.998,
         recipe_tint = {0x89, 0x71, 0xc7},
