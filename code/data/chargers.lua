@@ -132,9 +132,9 @@ local charger_discharger = function(p)
     local charger = {
         name = charger_name,
         type = "furnace", -- "assembling-machine",
-        icon = base.icon,
-        icon_size = base.icon_size,
-        icon_mipmaps = base.icon_mipmaps,
+        icon = battery_powered.icon_path .. charger_name .. ".png",
+        icon_size = 64,
+        -- icon_mipmaps = base.icon_mipmaps,
         placeable_by = { item = charger_name, count = 1 },
         minable = { 
             mining_time = base.minable.mining_time,
@@ -184,10 +184,8 @@ local charger_discharger = function(p)
         order = charger.order,
         subgroup = subgroup,
         stack_size = 50,
-        icon = base.icon,
-        icons = base.icons,
-        icon_size = base.icon_size,
-        icon_mipmaps = base.icon_mipmaps,
+        icon = charger.icon,
+        icon_size = charger.icon_size,
         place_result = charger_name,
     }
 
@@ -209,9 +207,9 @@ local charger_discharger = function(p)
     local discharger = {
         name = discharger_name,
         type = "burner-generator",
-        icon = base.icon,
-        icon_size = base.icon_size,
-        icon_mipmaps = base.icon_mipmaps,
+        icon = battery_powered.icon_path .. discharger_name .. ".png",
+        icon_size = 64,
+        --icon_mipmaps = 1,
         placeable_by = { item = discharger_name, count = 1 },
         minable = { mining_time = base.minable.mining_time, result = discharger_name },
         order = "z-battery-discharger-"..p.order,
@@ -265,10 +263,8 @@ local charger_discharger = function(p)
         order = discharger.order,
         subgroup = subgroup,
         stack_size = 50,
-        icon = base.icon,
-        icons = base.icons,
-        icon_size = base.icon_size,
-        icon_mipmaps = base.icon_mipmaps,
+        icon = discharger.icon,
+        icon_size = discharger.icon_size,
         place_result = discharger_name,
     }
 
