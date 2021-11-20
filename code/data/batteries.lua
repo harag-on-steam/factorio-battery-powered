@@ -8,13 +8,13 @@ local data_util = mods["space-exploration"] and require("__space-exploration__.d
 local group = "intermediate-products"
 
 local subgroup = "intermediate-product"
-local subgroup_charged = mods["space-exploration"] and "processed-fuel" or "intermediate-product"
+local subgroup_charged = battery_powered.is_se and "processed-fuel" or "intermediate-product"
 
 local base_battery = data.raw.item["battery"]
 base_battery.order = "h[battery]-a-a"
 base_battery.subgroup = subgroup
 
-if mods["Krastorio2"] then
+if battery_powered.is_k2 then
     battery = data.raw.item["lithium-sulfur-battery"]
     battery.group = group
     battery.subgroup = subgroup
@@ -105,7 +105,7 @@ local create_battery = function (p)
         add_unlock_to_tech(p.tech, name_charged)
     end
 
-    if mods["space-exploration"] and p.scrap then
+    if battery_powered.is_se and p.scrap then
 
         local scrap_battery = {
             type = "recipe",
@@ -152,7 +152,7 @@ create_battery({
     top_speed = 1.05,
 })
 
-if not mods["Krastorio2"] then
+if not battery_powered.is_k2 then
     create_battery({
         prefix = "advanced",
         tech = "electric-energy-accumulators",
@@ -186,13 +186,13 @@ else
         order = "b",
         -- 2MJ less energy density than solid fuel, .2 more acceleration, .05 more speed
         stack = 50,
-        fuel = mods["space-exploration"] and 10 or 40, -- K2 has 40MJ with IR2 charging, replicate that for K2 without SE
+        fuel = battery_powered.is_se and 10 or 40, -- K2 has 40MJ with IR2 charging, replicate that for K2 without SE
         acceleration = 1.4,
         top_speed = 1.10,
     })
 
     local charged = data.raw.item["bp-charged-lithium-sulfur-battery"]
-       -- straight out of  __Krastorio2__/compatibility-scripts/data-final-fixes/IndustrialRevolution.lua
+    -- straight out of  __Krastorio2__/compatibility-scripts/data-final-fixes/IndustrialRevolution.lua
     charged.icon = "__Krastorio2__/graphics/compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png"
     charged.icon_size = 64
     charged.icon_mipmaps = 4
@@ -216,7 +216,7 @@ else
     }
 end
 
-if mods["space-exploration"] then
+if battery_powered.is_se then
 
     create_battery({
         prefix = "holmium",
