@@ -120,7 +120,7 @@ local function charger_anim(prefix)
   end
 
 local charger_discharger = function(p)
-    local base = table.deepcopy(data.raw.accumulator[p.based_on])
+    local base = data.raw.accumulator[p.based_on]
 
     local prefix = ""
     if (p.prefix) then
@@ -171,10 +171,12 @@ local charger_discharger = function(p)
         close_sound = base.close_sound,
 
         working_sound = {
-            sound = { filename = battery_powered.sound_path.."/machine.ogg", volume = 0.95 },
-            fade_in_ticks = 10,
-            fade_out_ticks = 30,
-        },
+          sound = { filename = "__base__/sound/accumulator-working.ogg", volume = 0.4 },
+          max_sounds_per_type = 3,
+          audible_distance_modifier = 0.5,
+          fade_in_ticks = 4,
+          fade_out_ticks = 20
+        },        
         se_allow_in_space = true,
     }
 
@@ -202,91 +204,94 @@ local charger_discharger = function(p)
         energy_required = 8,
     }
 
-    local discharger_name = "bp-"..prefix.."battery-discharger"
-
-    local discharger = {
-        name = discharger_name,
-        type = "burner-generator",
-        icon = battery_powered.icon_path .. discharger_name .. ".png",
-        icon_size = 64,
-        --icon_mipmaps = 1,
-        placeable_by = { item = discharger_name, count = 1 },
-        minable = { mining_time = base.minable.mining_time, result = discharger_name },
-        order = "z-battery-discharger-"..p.order,
-        flags = {"placeable-neutral", "player-creation"},
-        max_health = 150,
-        corpse = base.corpse,
-        dying_explosion = base.dying_explosion,
-        collision_box = {{-0.9, -0.9}, {0.9, 0.9}},
-        selection_box = {{-1, -1}, {1, 1}},
-        damaged_trigger_effect = table.deepcopy(base.damaged_trigger_effect),
-        effectivity = 1,
-        energy_source = {
-            type = "electric",
-            usage_priority = "tertiary",
-            drain = "0kW",
-        },
-        max_power_output = p.energy_usage,
-        burner = {
-            emissions_per_minute = 0,
-            fuel_category = "battery",
-            fuel_inventory_size = 1,
-            burnt_inventory_size = 1,
-            type = "burner",
-            light_flicker = {
-                minimum_intensity = 0,
-                maximum_intensity = 0,
-            },
-        },
-
-        drawing_box = {{-1, -1.5}, {1, 1}},
-        min_perceived_performance = 1,
-        idle_animation = charger_discharger_picture(prefix, true, 24),
-        animation = discharger_anim(prefix),
-        water_reflection = table.deepcopy(base.water_reflection),
-
-        vehicle_impact_sound = base.vehicle_impact_sound,
-        open_sound = base.open_sound,
-        close_sound = base.close_sound,
-
-        working_sound = {
-            sound = { filename = battery_powered.sound_path.."/machine.ogg", volume = 0.95 },
-            fade_in_ticks = 10,
-            fade_out_ticks = 30,
-        },
-        se_allow_in_space = true,
-    }
-
-    local discharger_item = {
-        type = "item",
-        name = discharger_name,
-        order = discharger.order,
-        subgroup = subgroup,
-        stack_size = 50,
-        icon = discharger.icon,
-        icon_size = discharger.icon_size,
-        place_result = discharger_name,
-    }
-
-    local discharger_recipe = {
-        type = "recipe",
-        name = discharger_name,
-        order = discharger.order,
-        subgroup = subgroup,
-        result = discharger_name,
-        result_count = 1,
-        category = "crafting",
-        enabled = false,
-        ingredients = p.ingredients or p.ingredients_discharger,
-        energy_required = 8,
-    }
-    data:extend({ 
-        charger , charger_item, charger_recipe, 
-        discharger, discharger_item, discharger_recipe,
-    })
-
+    data:extend({ charger , charger_item, charger_recipe, })
     add_unlock_to_tech(p.tech, charger_name)
-    add_unlock_to_tech(p.tech, discharger_name)
+
+    if settings.startup["battery-powered-dischargers"].value then
+      local discharger_name = "bp-"..prefix.."battery-discharger"
+
+      local discharger = {
+          name = discharger_name,
+          type = "burner-generator",
+          icon = battery_powered.icon_path .. discharger_name .. ".png",
+          icon_size = 64,
+          --icon_mipmaps = 1,
+          placeable_by = { item = discharger_name, count = 1 },
+          minable = { mining_time = base.minable.mining_time, result = discharger_name },
+          order = "z-battery-discharger-"..p.order,
+          flags = {"placeable-neutral", "player-creation"},
+          max_health = 150,
+          corpse = base.corpse,
+          dying_explosion = base.dying_explosion,
+          collision_box = {{-0.9, -0.9}, {0.9, 0.9}},
+          selection_box = {{-1, -1}, {1, 1}},
+          damaged_trigger_effect = table.deepcopy(base.damaged_trigger_effect),
+          effectivity = 1,
+          energy_source = {
+              type = "electric",
+              usage_priority = "tertiary",
+              drain = "0kW",
+          },
+          max_power_output = p.energy_usage,
+          burner = {
+              emissions_per_minute = 0,
+              fuel_category = "battery",
+              fuel_inventory_size = 1,
+              burnt_inventory_size = 1,
+              type = "burner",
+              light_flicker = {
+                  minimum_intensity = 0,
+                  maximum_intensity = 0,
+              },
+          },
+
+          drawing_box = {{-1, -1.5}, {1, 1}},
+          min_perceived_performance = 1,
+          idle_animation = charger_discharger_picture(prefix, true, 24),
+          animation = discharger_anim(prefix),
+          water_reflection = table.deepcopy(base.water_reflection),
+
+          vehicle_impact_sound = base.vehicle_impact_sound,
+          open_sound = base.open_sound,
+          close_sound = base.close_sound,
+
+          working_sound = {
+            sound = { filename = "__base__/sound/accumulator-idle.ogg", volume = 0.55 },
+            max_sounds_per_type = 3,
+            audible_distance_modifier = 0.5,
+            fade_in_ticks = 4,
+            fade_out_ticks = 20
+          },        
+          se_allow_in_space = true,
+      }
+
+      local discharger_item = {
+          type = "item",
+          name = discharger_name,
+          order = discharger.order,
+          subgroup = subgroup,
+          stack_size = 50,
+          icon = discharger.icon,
+          icon_size = discharger.icon_size,
+          place_result = discharger_name,
+      }
+
+      local discharger_recipe = {
+          type = "recipe",
+          name = discharger_name,
+          order = discharger.order,
+          subgroup = subgroup,
+          result = discharger_name,
+          result_count = 1,
+          category = "crafting",
+          enabled = false,
+          ingredients = p.ingredients or p.ingredients_discharger,
+          energy_required = 8,
+      }
+
+      data:extend({ discharger, discharger_item, discharger_recipe, })
+      add_unlock_to_tech(p.tech, discharger_name)
+    end
 end
 
 charger_discharger({
