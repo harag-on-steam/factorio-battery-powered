@@ -10,6 +10,7 @@
         "base",
         "? deadlock-beltboxes-loaders >= 2.4.0",
         "? space-exploration",
+        "? Krastorio2",
         "? Deadlock-SE-bridge",
         "(?) DeadlockStackingForVanilla",
         "? angelsaddons-mobility"

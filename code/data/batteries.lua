@@ -14,15 +14,22 @@ local base_battery = data.raw.item["battery"]
 base_battery.order = "h[battery]-a-a"
 base_battery.subgroup = subgroup
 
+if mods["Krastorio2"] then
+    battery = data.raw.item["lithium-sulfur-battery"]
+    battery.group = group
+    battery.subgroup = subgroup
+    battery.order = "h[battery]-a-b"
+end
+
 local create_battery = function (p)
     local name, name_charged
 
-    if (p.prefix) then
+    if not p.use then
         name = "bp-"..p.prefix.."-battery"
         name_charged = "bp-charged-"..p.prefix.."-battery"
     else 
-        name = "battery"
-        name_charged = "bp-charged-battery"
+        name = p.use
+        name_charged = "bp-charged-"..(p.prefix and (p.prefix .. "-") or "").."battery"
     end
 
     local battery = {
@@ -89,7 +96,7 @@ local create_battery = function (p)
         crafting_machine_tint = { primary = p.recipe_tint },
     }
 
-    if name == "battery" then
+    if p.use then
         data:extend({charged_battery, charge_battery})
         add_unlock_to_tech(p.tech, name_charged)
     else
@@ -132,9 +139,9 @@ local create_battery = function (p)
 end
 
 create_battery({
+    use = "battery",
     prefix = false,
     tech = "electric-energy-accumulators",
-    ingredients = {}, -- ignored, "battery" already exists
     probability = 0.98,
     recipe_tint = {0xB2,0x53,0x36},
     order = "a",
@@ -145,29 +152,69 @@ create_battery({
     top_speed = 1.05,
 })
 
-create_battery({
-    prefix = "advanced",
-    tech = "electric-energy-accumulators",
-    ingredients = {
-        {type = "item",  name = "steel-plate",   amount =  1},
-        {type = "item",  name = "copper-plate",  amount =  2},
-        {type = "item",  name = "plastic-bar",   amount =  2},
-        {type = "fluid", name = "sulfuric-acid", amount = 40},
-    },
-    scrap = {
-        {type = "item",  name = "se-scrap",      amount     = 1},
-        {type = "item",  name = "copper-plate",  amount_min = 1, amount_max  = 2},
-        {type = "item",  name = "plastic-bar",   amount_min = 1, amount_max  = 2},
-    },
-    probability = 0.99,
-    recipe_tint = {0xE6,0xBA,0x39},
-    order = "b",
-    -- 2MJ less energy density than solid fuel, .2 more acceleration, .05 more speed
-    stack = 50,
-    fuel = 10,
-    acceleration = 1.4,
-    top_speed = 1.10,
-})
+if not mods["Krastorio2"] then
+    create_battery({
+        prefix = "advanced",
+        tech = "electric-energy-accumulators",
+        ingredients = {
+            {type = "item",  name = "steel-plate",   amount =  1},
+            {type = "item",  name = "copper-plate",  amount =  2},
+            {type = "item",  name = "plastic-bar",   amount =  2},
+            {type = "fluid", name = "sulfuric-acid", amount = 40},
+        },
+        scrap = {
+            {type = "item",  name = "se-scrap",      amount     = 1},
+            {type = "item",  name = "copper-plate",  amount_min = 1, amount_max  = 2},
+            {type = "item",  name = "plastic-bar",   amount_min = 1, amount_max  = 2},
+        },
+        probability = 0.99,
+        recipe_tint = {0xE6,0xBA,0x39},
+        order = "b",
+        -- 2MJ less energy density than solid fuel, .2 more acceleration, .05 more speed
+        stack = 50,
+        fuel = 10,
+        acceleration = 1.4,
+        top_speed = 1.10,
+    })
+else
+    create_battery({
+        use = "lithium-sulfur-battery",
+        prefix = "lithium-sulfur",
+        tech = "kr-lithium-sulfur-battery",
+        probability = 0.99,
+        recipe_tint = {0xE6,0xBA,0x39},
+        order = "b",
+        -- 2MJ less energy density than solid fuel, .2 more acceleration, .05 more speed
+        stack = 50,
+        fuel = mods["space-exploration"] and 10 or 40, -- K2 has 40MJ with IR2 charging, replicate that for K2 without SE
+        acceleration = 1.4,
+        top_speed = 1.10,
+    })
+
+    local charged = data.raw.item["bp-charged-lithium-sulfur-battery"]
+       -- straight out of  __Krastorio2__/compatibility-scripts/data-final-fixes/IndustrialRevolution.lua
+    charged.icon = "__Krastorio2__/graphics/compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png"
+    charged.icon_size = 64
+    charged.icon_mipmaps = 4
+    charged.pictures = {
+        layers = {
+            {
+                size = 64,
+                filename = "__Krastorio2__/graphics/compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png",
+                scale = 0.25,
+                mipmap_count = 4,
+            }, 
+            {
+                draw_as_light = true,
+                flags = { "light" },
+                size = 64,
+                filename = "__Krastorio2__/graphics/icons/items/lithium-sulfur-battery-light.png",
+                scale = 0.25,
+                mipmap_count = 4,
+            },
+        },
+    }
+end
 
 if mods["space-exploration"] then
 
