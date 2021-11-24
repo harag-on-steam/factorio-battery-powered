@@ -1,11 +1,40 @@
 local vehicles = {
-	locomotive = "locomotive",
-	car = "car",
-	tank = "car",
+	locomotive = {
+		locomotive = true,
+	},
+	car = {
+		-- vanilla
+		car = true,
+		tank = true,
+		-- AAI
+		-- ["vehicle-miner"] = true,
+		["vehicle-hauler"] = true,
+		["vehicle-warden"] = true,
+		["vehicle-chaingunner"] = true,
+		["vehicle-flame-tumbler"] = true,
+		["vehicle-flame-tank"] = true,
+		-- K2
+		["kr-advanced-tank"] = true,
+	},
+}
+
+local vehicle_matches = {
+	locomotive = {
+		-- Angel's Mass Transit
+		"^smelting%-locomotive",
+        "^petro%-locomotive",
+        "^crawler%-locomotive",
+	},
+	car = {
+		-- AAI
+		-- "^vehicle%-miner%-mk",
+	}
 }
 
 local function modify_vehicle(prototype)
 	local b = prototype.burner
+	if not b then return end
+
 	if b.fuel_categories then
 		table.insert(b.fuel_categories, "battery")
 	else
@@ -18,23 +47,16 @@ local function modify_vehicle(prototype)
 	end
 end
 
-for name, vehicle in pairs(vehicles) do
-	local prototype = data.raw[vehicle][name]
-	if prototype and prototype.burner then
-		modify_vehicle(prototype)
+for _, vehicle in pairs({"locomotive", "car"}) do
+	for _, prototype in pairs(data.raw[vehicle]) do
+		if vehicles[vehicle][prototype.name] then
+			modify_vehicle(prototype)
+		end
+
+		for _, pattern in pairs(vehicle_matches[vehicle]) do
+			if (string.match(prototype.name, pattern)) then
+				modify_vehicle(prototype)
+			end
+		end
 	end
 end
-
-for _, prototype in pairs(data.raw.locomotive) do
-    if prototype.burner and (
-        -- Angel's Mass Transit
-        string.match(prototype.name, "^smelting%-locomotive")
-        or string.match(prototype.name, "^petro%-locomotive")
-        or string.match(prototype.name, "^crawler%-locomotive"))
-    then
-		modify_vehicle(prototype)
-    end
-end
-
-------------------------------------------------------------------------------------------------------------------------------------------------------
-
