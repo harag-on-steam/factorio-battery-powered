@@ -37,10 +37,12 @@ local function modify_vehicle(prototype)
 
 	if b.fuel_categories then
 		table.insert(b.fuel_categories, "battery")
-	else
-		b.fuel_categories = {b.fuel_category, "battery"}
+	elseif b.fuel_category then
+		b.fuel_categories = { b.fuel_category, "battery"}
 		b.fuel_category = nil
-	end
+	else
+        b.fuel_categories = { "chemical", "battery"} -- no fuel_category means default = "chemical"
+    end
 
 	if not b.burnt_inventory_size or b.burnt_inventory_size < 1 then
 		b.burnt_inventory_size = 1
