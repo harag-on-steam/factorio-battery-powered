@@ -1,6 +1,6 @@
 {
     "name": "battery-powered",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "title": "Battery Powered",
     "description": "Provides several tiers of batteries that can be used as fuel and to transport energy. The highest tiers require Space Exploration.",
     "author": "Harag",
@@ -11,6 +11,7 @@
         "? deadlock-beltboxes-loaders >= 2.4.0",
         "? space-exploration",
         "? Krastorio2",
+        "? Krastorio2Assets",
         "? Deadlock-SE-bridge",
         "(?) DeadlockStackingForVanilla",
         "? angelsaddons-mobility",

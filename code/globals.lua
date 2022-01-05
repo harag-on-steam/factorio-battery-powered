@@ -11,3 +11,11 @@ battery_powered.icon_mipmaps = 4
 
 battery_powered.is_se = ((mods and mods["space-exploration"]) or (game and game.active_mods["space-exploration"])) and true
 battery_powered.is_k2 = ((mods and mods["Krastorio2"]) or (game and game.active_mods["Krastorio2"])) and true
+
+-- support both K2 1.1 and K2 1.2 (assets were split in a separate mod)
+if mods and mods["Krastorio2"] then
+    local versionParts = string.gmatch(mods["Krastorio2"], "%d+")
+    local major = tonumber(versionParts())
+    local minor = tonumber(versionParts())
+    battery_powered.k2_path = (major == 1 and minor < 2 and "__Krastorio2__/graphics/") or "__Krastorio2Assets__/"
+end

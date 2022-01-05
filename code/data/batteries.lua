@@ -193,14 +193,14 @@ else
 
     local charged = data.raw.item["bp-charged-lithium-sulfur-battery"]
     -- straight out of  __Krastorio2__/compatibility-scripts/data-final-fixes/IndustrialRevolution.lua
-    charged.icon = "__Krastorio2__/graphics/compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png"
+    charged.icon = battery_powered.k2_path .. "compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png"
     charged.icon_size = 64
     charged.icon_mipmaps = 4
     charged.pictures = {
         layers = {
             {
                 size = 64,
-                filename = "__Krastorio2__/graphics/compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png",
+                filename = battery_powered.k2_path .. "compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png",
                 scale = 0.25,
                 mipmap_count = 4,
             }, 
@@ -208,7 +208,7 @@ else
                 draw_as_light = true,
                 flags = { "light" },
                 size = 64,
-                filename = "__Krastorio2__/graphics/icons/items/lithium-sulfur-battery-light.png",
+                filename = battery_powered.k2_path .. "icons/items/lithium-sulfur-battery-light.png",
                 scale = 0.25,
                 mipmap_count = 4,
             },
