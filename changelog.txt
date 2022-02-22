@@ -4,6 +4,7 @@ Date: 2022-02-22
   Changes:
     - Added proper entity graphics for the battery charger and generators
     - Added setting to disable battery decay
+    - Added support for SE Space Trains
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.2
 Date: 2022-01-05
