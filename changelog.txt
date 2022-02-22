@@ -1,8 +1,9 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.3.0
-Date: 2022-02-20
+Version: 1.0.0.0
+Date: 2022-02-22
   Changes:
     - Added proper entity graphics for the battery charger and generators
+    - Added setting to disable battery decay
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.2
 Date: 2022-01-05
