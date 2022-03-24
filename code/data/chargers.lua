@@ -1,55 +1,33 @@
 local subgroup = mods["space-exploration"] and "solar" or "energy"
 
-local base_accumulator_path = "__base__/graphics/entity/accumulator/"
-
 local function charger_discharger_picture(prefix, is_discharger, repeat_count, tint)
-    local filename = prefix .. ((is_discharger and "dis") or "") .. "charger"
+    local typename = ((is_discharger and "dis") or "") .. "charger"
+    local filename = prefix .. typename
 
     return
     {
       layers =
       {
         {
-          filename = battery_powered.entity_path.."/lr-"..filename..".png",
+          filename = battery_powered.entity_path.."/hr-"..filename..".png",
           priority = "high",
-          width = 66,
-          height = 94,
+          width = 128,
+          height = 192,
           repeat_count = repeat_count,
-          shift = util.by_pixel(0, -10),
+          shift = util.by_pixel(0, -16),
           tint = tint,
-          animation_speed = 0.5,
-          hr_version =
-          {
-            filename = battery_powered.entity_path.."/hr-"..filename..".png",
-            priority = "high",
-            width = 130,
-            height = 189,
-            repeat_count = repeat_count,
-            shift = util.by_pixel(0, -11),
-            tint = tint,
-            animation_speed = 0.5,
-            scale = 0.5
-          }
+          animation_speed = is_discharger and 0.25 or 0.5,
+          scale = 0.5
         },
         {
-          filename = base_accumulator_path.."accumulator-shadow.png",
+          filename = battery_powered.entity_path.."/hr-"..typename.."-shadow.png",
           priority = "high",
-          width = 120,
-          height = 54,
+          width = 256,
+          height = 128,
           repeat_count = repeat_count,
-          shift = util.by_pixel(28, 6),
+          shift = util.by_pixel(32, 0),
           draw_as_shadow = true,
-          hr_version =
-          {
-            filename = base_accumulator_path.."hr-accumulator-shadow.png",
-            priority = "high",
-            width = 234,
-            height = 106,
-            repeat_count = repeat_count,
-            shift = util.by_pixel(29, 6),
-            draw_as_shadow = true,
-            scale = 0.5
-          }
+          scale = 0.5
         },
       }
     }
@@ -62,27 +40,32 @@ local function charger_anim(prefix)
       {
         charger_discharger_picture(prefix, false, 24),
         {
-          filename = base_accumulator_path.."accumulator-charge.png",
+          filename = battery_powered.entity_path.."/hr-charger-fizzle.png",
           priority = "high",
-          width = 90,
-          height = 100,
+          width = 143,
+          height = 192,
           line_length = 6,
           frame_count = 24,
           draw_as_glow = true,
-          shift = util.by_pixel(0, -22),
-          hr_version =
-          {
-            filename = base_accumulator_path.."hr-accumulator-charge.png",
-            priority = "high",
-            width = 178,
-            height = 206,
-            line_length = 6,
-            frame_count = 24,
-            draw_as_glow = true,
-            shift = util.by_pixel(0, -22),
-            scale = 0.5
-          }
+          shift = util.by_pixel(0, -16),
+          scale = 0.5
+        },
+        {
+          filename = battery_powered.entity_path.."/hr-charger-worklight.png",
+          priority = "high",
+          width = 128,
+          height = 192,
+          line_length = 6,
+          frame_count = 24,
+          apply_runtime_tint = true,
+          -- half speed compared to lightning
+          frame_sequence = { 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1 },
+          draw_as_glow = true,
+          shift = util.by_pixel(0, -16),
+          scale = 0.5,
+          tint = { r = 0.6, g = 1.0, b = 0.95, a = 1 },
         }
+
       }
     }
   end
@@ -94,27 +77,38 @@ local function charger_anim(prefix)
       {
         charger_discharger_picture(prefix, true, 24),
         {
-          filename = base_accumulator_path.."accumulator-discharge.png",
+          filename = battery_powered.entity_path.."/hr-discharger-lightning.png",
           priority = "high",
-          width = 88,
-          height = 104,
+          width = 128,
+          height = 192,
           line_length = 6,
           frame_count = 24,
           draw_as_glow = true,
-          shift = util.by_pixel(-2, -22),
-          hr_version =
-          {
-            filename = base_accumulator_path.."hr-accumulator-discharge.png",
-            priority = "high",
-            width = 170,
-            height = 210,
-            line_length = 6,
-            frame_count = 24,
-            draw_as_glow = true,
-            shift = util.by_pixel(-1, -23),
-            scale = 0.5
-          }
+          -- blend_mode = "additive",
+          shift = util.by_pixel(0, -16),
+          scale = 0.5,
+          -- electric light green-blue
+          tint = { r = 0.60, g = 1.00, b = 0.95, a = 1 }
+        },
+        {
+          filename = battery_powered.entity_path.."/hr-discharger-worklight.png",
+          priority = "high",
+          width = 128,
+          height = 192,
+          line_length = 6,
+          frame_count = 24,
+          apply_runtime_tint = true,
+          frame_sequence = { 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1 },
+          draw_as_glow = true,
+          shift = util.by_pixel(0, -16),
+          scale = 0.5,
+          tint = { r = 0.60, g = 1.00, b = 0.95, a = 1 },
         }
+
+        -- yellow  tint = { r = 1.00, g = 0.81, b = 0.60, a = 0.5 }
+        -- holmium tint = { r = 0.99, g = 0.60, b = 1.00, a = 0.5 }
+        -- naquium tint = { r = 0.30, g = 0.34, b = 1.00, a = 1.0 }
+        -- naquium brighter tint = { r = 0.65, g = 0.60, b = 1.0, a = 1 }
       }
     }
   end
@@ -176,7 +170,7 @@ local charger_discharger = function(p)
           audible_distance_modifier = 0.5,
           fade_in_ticks = 4,
           fade_out_ticks = 20
-        },        
+        },
         se_allow_in_space = true,
     }
 
