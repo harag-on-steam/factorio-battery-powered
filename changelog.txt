@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.0.0.0
+Version: 1.0.1
 Date: 2022-02-22
   Changes:
     - Added proper entity graphics for the battery charger and generators
