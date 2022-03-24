@@ -1,6 +1,8 @@
 local vehicles = {
 	locomotive = {
 		locomotive = true,
+		-- se-space-trains
+		["space-locomotive"] = true,
 	},
 	car = {
 		-- vanilla

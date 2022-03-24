@@ -1,6 +1,6 @@
 {
     "name": "battery-powered",
-    "version": "0.3.0",
+    "version": "1.0.0",
     "title": "Battery Powered",
     "description": "Provides several tiers of batteries that can be used as fuel and to transport energy. The highest tiers require Space Exploration.",
     "author": "Harag",
@@ -15,6 +15,7 @@
         "? Deadlock-SE-bridge",
         "(?) DeadlockStackingForVanilla",
         "? angelsaddons-mobility",
+        "? se-space-trains",
         "? aai-vehicles-chaingunner",
         "? aai-vehicles-flame-tank",
         "? aai-vehicles-flame-tumbler",
