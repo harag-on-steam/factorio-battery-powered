@@ -1,4 +1,5 @@
-local subgroup = mods["space-exploration"] and "solar" or "energy"
+local is_se = mods["space-exploration"]
+local subgroup = is_se and "solar" or "energy"
 
 local function charger_discharger_picture(prefix, is_discharger, repeat_count, tint)
     local typename = ((is_discharger and "dis") or "") .. "charger"
@@ -294,7 +295,7 @@ end
 
 charger_discharger({
     prefix = false,
-    next_prefix = "holmium",
+    next_prefix = is_se and "holmium",
     based_on = "accumulator",
     order = "a",
     ingredients = {
@@ -307,7 +308,7 @@ charger_discharger({
     tech = "electric-energy-accumulators",
 })
 
-if mods["space-exploration"] then
+if is_se then
     charger_discharger({
         prefix = "holmium",
         next_prefix = "naquium",
