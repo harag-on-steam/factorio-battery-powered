@@ -135,6 +135,8 @@ local charger_discharger = function(p)
             result = charger_name 
         },
         flags = {"placeable-neutral", "player-creation"},
+        fast_replaceable_group = "battery-charger",
+        next_upgrade = p.next_prefix and ("bp-"..p.next_prefix.."-battery-charger"),
         max_health = 150,
         corpse = base.corpse,
         dying_explosion = base.dying_explosion,
@@ -214,6 +216,8 @@ local charger_discharger = function(p)
           minable = { mining_time = base.minable.mining_time, result = discharger_name },
           order = "z-battery-discharger-"..p.order,
           flags = {"placeable-neutral", "player-creation"},
+          fast_replaceable_group = "battery-generator",
+          next_upgrade = p.next_prefix and ("bp-"..p.next_prefix.."-battery-discharger"),
           max_health = 150,
           corpse = base.corpse,
           dying_explosion = base.dying_explosion,
@@ -290,13 +294,14 @@ end
 
 charger_discharger({
     prefix = false,
+    next_prefix = "holmium",
     based_on = "accumulator",
     order = "a",
     ingredients = {
         {"copper-cable", 30},
         {"electronic-circuit", 2},
         {"iron-plate", 2},
-    },        
+    },
     crafting_speed = 0.5,
     energy_usage = "500kW",
     tech = "electric-energy-accumulators",
@@ -305,6 +310,7 @@ charger_discharger({
 if mods["space-exploration"] then
     charger_discharger({
         prefix = "holmium",
+        next_prefix = "naquium",
         based_on = "se-space-accumulator",
         order = "b",
         ingredients_charger = {
