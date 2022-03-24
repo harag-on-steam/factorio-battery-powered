@@ -4,6 +4,7 @@ data:extend({
 })
 
 local data_util = mods["space-exploration"] and require("__space-exploration__.data_util")
+local is_decay = settings.startup["battery-powered-decay"].value
 
 local group = "intermediate-products"
 
@@ -80,7 +81,7 @@ local create_battery = function (p)
         type = "recipe",
         name = name_charged,
         results = {
-            { type = "item", name = name_charged, amount = 1, probability = p.probability or 1 },
+            { type = "item", name = name_charged, amount = 1, probability = (is_decay and p.probability) or 1 },
         },
         order = "h[battery]-b-"..p.order,
         category = "charging",
