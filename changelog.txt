@@ -1,7 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 2022-06-06
+  Changes:
+    - Added setting that allows to deliver discharged batteries by cannon
+    - Added setting that adapts batteries to Krastorio2 fuel settings 
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 2022-03-24
-  Changes:
+  Bugfixes:
     - Fixed fast-replace references that aren't available in vanilla Factorio
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.2
@@ -18,12 +24,12 @@ Date: 2022-02-22
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.2
 Date: 2022-01-05
-  Changes:
+  Bugfixes:
     - Fixed wrong graphics path with Krastario 2 version 1.2.0 and higher
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.1
 Date: 2021-12-27
-  Changes:
+  Bugfixes:
     - Fixed that vehicles with default fuel were restricted to only use batteries
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.0
@@ -33,7 +39,7 @@ Date: 2021-11-24
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.4
 Date: 2021-11-23
-  Changes:
+  Bugfixes:
     - Fixed K2 removing batteries as fuel after this mod added them
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.3
