@@ -5,6 +5,7 @@ data:extend({
 
 local data_util = mods["space-exploration"] and require("__space-exploration__.data_util")
 local is_decay = settings.startup["battery-powered-decay"].value
+local is_k2_fuel_rebalance = battery_powered.is_k2 and settings["kr-rebalance-fuels"].value and settings["battery-powered-k2-fuel-rebalance"].value
 
 local group = "intermediate-products"
 
@@ -149,8 +150,9 @@ create_battery({
     -- a little better than coal :-)
     stack = 50,
     fuel = 5,
-    acceleration = 1.10,
-    top_speed = 1.05,
+    -- K2: slightly better than solid fuel
+    acceleration = (is_k2_fuel_rebalance and 0.85) or 1.10,
+    top_speed = (is_k2_fuel_rebalance and 0.75) or 1.05,
 })
 
 if not battery_powered.is_k2 then
@@ -188,8 +190,9 @@ else
         -- 2MJ less energy density than solid fuel, .2 more acceleration, .05 more speed
         stack = 50,
         fuel = battery_powered.is_se and 10 or 40, -- K2 has 40MJ with IR2 charging, replicate that for K2 without SE
-        acceleration = 1.4,
-        top_speed = 1.10,
+        -- K2: more acceleration but less top speed and range than normal fuel
+        acceleration = (is_k2_fuel_rebalance and 1.10) or 1.4,
+        top_speed = (is_k2_fuel_rebalance and 0.95) or 1.10,
     })
 
     local charged = data.raw.item["bp-charged-lithium-sulfur-battery"]
@@ -240,8 +243,9 @@ if battery_powered.is_se then
         -- same energy density as rocket fuel, same acceleration and speed
         stack = 20,
         fuel = 50,
-        acceleration = 1.80,
-        top_speed = 1.15,
+        -- K2: more acceleration but less top speed than advanced fuel
+        acceleration = (is_k2_fuel_rebalance and 1.40) or 1.80,
+        top_speed = (is_k2_fuel_rebalance and 1.20) or 1.15,
     })
 
     create_battery({
@@ -265,8 +269,9 @@ if battery_powered.is_se then
         -- 800MJ higher energy density than nuclear fuel, .3 less acceleration, same speed
         stack = 20,
         fuel = 100,
-        acceleration = 2.20,
-        top_speed = 1.15,
+        -- K2: more acceleration than advanced fuel
+        acceleration = (is_k2_fuel_rebalance and 1.80) or 2.20,
+        top_speed = (is_k2_fuel_rebalance and 1.25) or 1.15,
     })
     
 end

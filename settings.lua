@@ -13,4 +13,11 @@ data:extend({
         default_value = true,
         order = "a2",
     },
+    {
+        type = "bool-setting",
+        name = "battery-powered-k2-fuel-rebalance",
+        setting_type = "startup",
+        default_value = true,
+        order = "a4",
+    },
 })
