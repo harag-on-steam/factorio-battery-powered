@@ -5,7 +5,10 @@ data:extend({
 
 local data_util = mods["space-exploration"] and require("__space-exploration__.data_util")
 local is_decay = settings.startup["battery-powered-decay"].value
-local is_k2_fuel_rebalance = battery_powered.is_k2 and settings["kr-rebalance-fuels"].value and settings["battery-powered-k2-fuel-rebalance"].value
+local is_k2_fuel_rebalance = battery_powered.is_k2 and settings.startup["kr-rebalance-fuels"].value and settings.startup["battery-powered-k2-fuel-rebalance"].value
+
+-- SE defines this globally so adding to it is enough to create a capsule
+se_delivery_cannon_recipes = se_delivery_cannon_recipes or {}
 
 local group = "intermediate-products"
 
@@ -137,6 +140,10 @@ local create_battery = function (p)
 
         data:extend({scrap_battery})
         add_unlock_to_tech(p.tech, scrap_battery.name)
+    end
+
+    if battery_powered.is_se and settings.startup["battery-powered-delivery-cannon"].value then
+        se_delivery_cannon_recipes[battery.name] = { name = battery.name }
     end
 end
 
