@@ -11,20 +11,28 @@ local is_k2_fuel_rebalance = battery_powered.is_k2 and settings.startup["kr-reba
 se_delivery_cannon_recipes = se_delivery_cannon_recipes or {}
 
 local group = "intermediate-products"
+local subgroup = (battery_powered.is_se6 and "electronic") or "intermediate-product"
 
-local subgroup = "intermediate-product"
-local subgroup_charged = battery_powered.is_se and "processed-fuel" or "intermediate-product"
+local group_charged = (battery_powered.is_se6 and "resource") or "intermediate-products"
+local subgroup_charged = (battery_powered.is_se6 and "fuel") or (battery_powered.is_se and "processed-fuel") or "intermediate-product"
+
+local order = (battery_powered.is_se6 and "f") or "h[battery]-"
+local order_charged = (battery_powered.is_se6 and "q") or "h[battery]-"
+
+-- change existing items
 
 local base_battery = data.raw.item["battery"]
-base_battery.order = "h[battery]-a-a"
+base_battery.order = order.."a-a"
 base_battery.subgroup = subgroup
 
 if battery_powered.is_k2 then
     battery = data.raw.item["lithium-sulfur-battery"]
     battery.group = group
     battery.subgroup = subgroup
-    battery.order = "h[battery]-a-b"
+    battery.order = order.."a-b"
 end
+
+-- function to define new items and recipes
 
 local create_battery = function (p)
     local name, name_charged
@@ -46,7 +54,7 @@ local create_battery = function (p)
         stack_size = 100,
         group = group,
         subgroup = subgroup,
-        order = "h[battery]-a-"..p.order,
+        order = order.."a-"..p.order,
     }
 
     local produce_battery = {
@@ -70,9 +78,9 @@ local create_battery = function (p)
         icon_size = battery_powered.icon_size,
         icon_mipmaps = battery_powered.icon_mipmaps,
         stack_size = p.stack,
-        group = group,
+        group = group_charged,
         subgroup = subgroup_charged,
-        order = "h[battery]-b-"..p.order,
+        order = order_charged.."b-"..p.order,
         burnt_result = name,
         fuel_value = p.fuel .. "MJ",
         fuel_category = "battery",
@@ -87,7 +95,7 @@ local create_battery = function (p)
         results = {
             { type = "item", name = name_charged, amount = 1, probability = (is_decay and p.probability) or 1 },
         },
-        order = "h[battery]-b-"..p.order,
+        order = order.."b-"..p.order,
         category = "charging",
         enabled = false,
         always_show_made_in = true,
@@ -129,9 +137,9 @@ local create_battery = function (p)
             -- icon_size = battery_powered.icon_size,
             -- icon_mipmaps = battery_powered.icon_mipmaps,
             results = p.scrap,
-            order = "h[battery]-a-"..p.order,
+            -- order = "h[battery]-a-"..p.order,
             category = "hard-recycling",
-            subgroup = subgroup,
+            subgroup = battery_powered.is_se6 and "recycling" or subgroup,
             enabled = false,
             ingredients = {{type = "item", name = name, amount = 1}},
             energy_required = 4,
@@ -146,6 +154,8 @@ local create_battery = function (p)
         se_delivery_cannon_recipes[battery.name] = { name = battery.name }
     end
 end
+
+-- define batteries
 
 create_battery({
     use = "battery",
@@ -236,7 +246,11 @@ if battery_powered.is_se then
             {type = "item",  name = "se-heat-shielding", amount =   1},
             {type = "item",  name = "glass",             amount =   1},
             {type = "item",  name = "se-holmium-plate",  amount =   2},
+            
+            battery_powered.is_se6 and
+            {type = "fluid", name = "se-vitalic-acid",   amount =  10} or
             {type = "item",  name = "se-vitalic-acid",   amount =   1},
+
             {type = "fluid", name = "se-ion-stream",     amount =  20},
         },
         scrap = {
