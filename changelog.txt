@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.1
+Date: 2022-06-24
+  Bugfixes:
+    - Fixed that MultipleUnitTrainControl locomotives wont't accept batteries with K2 active
+---------------------------------------------------------------------------------------------------
 Version: 1.1.0
 Date: 2022-06-06
   Changes:

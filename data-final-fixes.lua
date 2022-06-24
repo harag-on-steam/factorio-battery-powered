@@ -1,5 +1,6 @@
-if battery_powered.is_k2 then
-    require("code.data.vehicle-fuel") -- K2 changes fuel-categories in this data stage, redo our changes
+if battery_powered.is_k2 and battery_powered.is_se then
+    -- With SE active K2 changes fuel-categories in this data stage, redo our changes *again*
+    require("code.data.vehicle-fuel")
 end
 
 if deadlock and settings.startup["deadlock-enable-beltboxes"].value then
