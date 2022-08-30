@@ -39,12 +39,28 @@ local function sync_recipes_with_research()
 	end
 end
 
+local function register_jetpack_fuels()
+	local charged_batteries = {
+		["bp-charged-battery"] = 1,
+		["bp-charged-advanced-battery"] = 1,
+		["bp-charged-lithium-sulfur-battery"] = 1,
+		["bp-charged-holmium-battery"] = 1.05,
+		["bp-charged-naquium-battery"] = 1.10,
+	}
+
+    if settings.startup["battery-powered-jetpack-fuel"].value and remote.interfaces["jetpack"]["add_fuels"] then
+        remote.call("jetpack", "add_fuels", charged_batteries)
+    end
+end
+
 local function on_init()
 	sync_recipes_with_research()
+	register_jetpack_fuels()
 end
 
 local function on_configuration_changed(change)
     sync_recipes_with_research()
+	register_jetpack_fuels()
 end
 
 script.on_init(on_init)

@@ -27,4 +27,18 @@ data:extend({
         default_value = true,
         order = "a4",
     },
+    {
+        type = "bool-setting",
+        name = "battery-powered-jetpack-fuel",
+        setting_type = "startup",
+        default_value = true,
+        order = "a5",
+    },
+    {
+        type = "bool-setting",
+        name = "battery-powered-equipment-fuel",
+        setting_type = "startup",
+        default_value = true,
+        order = "a6",
+    },
 })
