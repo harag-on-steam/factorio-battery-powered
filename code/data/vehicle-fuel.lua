@@ -3,6 +3,10 @@ local vehicles = {
 		locomotive = true,
 		-- se-space-trains
 		["space-locomotive"] = true,
+		["bob-locomotive-2"] = true,
+		["bob-locomotive-3"] = true,
+		["bob-armoured-locomotive"] = true,
+		["bob-armoured-locomotive-2"] = true,
 	},
 	car = {
 		-- vanilla
@@ -41,6 +45,8 @@ local supported_generators = {
 	"portable-generator-equipment",
 }
 
+local slot_count = settings.startup["battery-powered-burnt-inventory-size"].value
+
 local function has_value(table, value)
 	for _, v in pairs(table) do
 		if value == v then
@@ -64,8 +70,8 @@ local function modify_prototype(prototype)
         b.fuel_categories = { "chemical", "battery"} -- no fuel_category means default = "chemical"
     end
 
-	if not b.burnt_inventory_size or b.burnt_inventory_size < 1 then
-		b.burnt_inventory_size = 1
+	if not b.burnt_inventory_size or b.burnt_inventory_size < slot_count then
+		b.burnt_inventory_size = slot_count
 	end
 end
 

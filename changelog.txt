@@ -1,10 +1,12 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.3.0
-Date: 2022-08-30
+Date: 2022-11-17
   Changes:
+    - Added a setting to use batteries as fuel for the Jetpack (version 0.3.6+)
     - Added a setting to use batteries in equipment grid generators that use fuel 
       (Krastorio 2 and Portable Power Equipment)
-    - Added a setting to use batteries as fuel for the Jetpack (version 0.3.6+)
+    - Added a setting to increase vehicle output slot count
+    - Added support for locomotives from Bob's Logistics
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.0
 Date: 2022-07-01

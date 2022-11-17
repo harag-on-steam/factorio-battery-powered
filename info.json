@@ -12,7 +12,7 @@
         "? space-exploration >= 0.5.0",
         "? Krastorio2",
         "? Krastorio2Assets",
-        "? jetpack >= 0.3.6",
+        "? jetpack",
         "? Portable_power",
         "? Deadlock-SE-bridge",
         "(?) DeadlockStackingForVanilla",
