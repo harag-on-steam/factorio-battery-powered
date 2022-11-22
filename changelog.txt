@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.3.1
+Date: 2022-11-23
+  Bugfixes:
+    - Adapt to the changed API for Jetpack fuels.
+      Also fixes a crash when the Jetpack mod is not enabled.
+---------------------------------------------------------------------------------------------------
 Version: 1.3.0
 Date: 2022-11-17
   Changes:

@@ -39,29 +39,29 @@ local function sync_recipes_with_research()
 	end
 end
 
-local function register_jetpack_fuels()
-	local charged_batteries = {
+if settings.startup["battery-powered-jetpack-fuel"].value then
+	local mk2_battery = "bp-charged-"..(script.active_mods["Krastorio2"] and "lithium-sulfur" or "advanced").."-battery"
+
+	local jetpack_fuels = {
 		["bp-charged-battery"] = 1,
-		["bp-charged-advanced-battery"] = 1,
-		["bp-charged-lithium-sulfur-battery"] = 1,
+		[mk2_battery] = 1,
 		["bp-charged-holmium-battery"] = 1.05,
 		["bp-charged-naquium-battery"] = 1.10,
 	}
 
-    if settings.startup["battery-powered-jetpack-fuel"].value and remote.interfaces["jetpack"]["add_fuels"] then
-        remote.call("jetpack", "add_fuels", charged_batteries)
-    end
+	remote.add_interface("battery-powered", {
+		jetpack_fuels = function() return jetpack_fuels end,
+	})
 end
 
 local function on_init()
 	sync_recipes_with_research()
-	register_jetpack_fuels()
 end
 
 local function on_configuration_changed(change)
     sync_recipes_with_research()
-	register_jetpack_fuels()
 end
 
 script.on_init(on_init)
 script.on_configuration_changed(on_configuration_changed)
+
