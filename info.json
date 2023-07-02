@@ -23,7 +23,8 @@
         "? aai-vehicles-flame-tumbler",
         "? aai-vehicles-hauler",
         "? aai-vehicles-laser-tank",
-        "? aai-vehicles-warden"
+        "? aai-vehicles-warden",
+        "? better-train-system"
     ],
     "package": {
         "ignore": [".git", ".github", ".vscode", ".kakrc", "*.xcf", "*.kra"]
