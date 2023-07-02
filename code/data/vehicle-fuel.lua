@@ -28,8 +28,10 @@ local vehicle_matches = {
 	locomotive = {
 		-- Angel's Mass Transit
 		"^smelting%-locomotive",
-        "^petro%-locomotive",
-        "^crawler%-locomotive",
+		"^petro%-locomotive",
+		"^crawler%-locomotive",
+		-- Better Train System
+		"^locomotive%-mk",
 	},
 	car = {
 		-- AAI
