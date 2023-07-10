@@ -63,17 +63,15 @@ local function modify_prototype(prototype)
 	local b = prototype.burner
 	if not b then return end
 
-	if b.fuel_categories then
-		if not has_value(b.fuel_categories, "battery") then
-			table.insert(b.fuel_categories, "battery")
-		end
-	elseif b.fuel_category then
-		if b.fuel_category ~= "battery" then
-			b.fuel_categories = { b.fuel_category, "battery" }
-			b.fuel_category = nil
-		end
-	else
-		b.fuel_categories = { "chemical", "battery" } -- no fuel_category means default = "chemical"
+	if not b.fuel_categories then
+		b.fuel_categories = (b.fuel_category and { b.fuel_category }) or { "chemical" } -- the implicit default
+	elseif b.fuel_category and not has_value(b.fuel_categories, b.fuel_category) then
+		table.insert(b.fuel_categories, b.fuel_category)
+	end
+	b.fuel_category = nil -- always obsolete after the above
+
+	if not has_value(b.fuel_categories, "battery") then
+		table.insert(b.fuel_categories, "battery")
 	end
 
 	if not b.burnt_inventory_size or b.burnt_inventory_size < slot_count then
