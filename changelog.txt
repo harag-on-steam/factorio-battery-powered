@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.3.2
+Date: 2023-07-11
+  Changes:
+    - Added german translation by ST-DDT
+    - Added support for Better Train System (thanks ST-DDT)
+  Bugfixes:
+    - Adding batteries as a fuel category did override categories in some situations (thanks ST-DDT)
+---------------------------------------------------------------------------------------------------
 Version: 1.3.1
 Date: 2022-11-23
   Bugfixes:
