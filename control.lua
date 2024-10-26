@@ -45,9 +45,12 @@ if settings.startup["battery-powered-jetpack-fuel"].value then
 	local jetpack_fuels = {
 		["bp-charged-battery"] = 1,
 		[mk2_battery] = 1,
-		["bp-charged-holmium-battery"] = 1.05,
-		["bp-charged-naquium-battery"] = 1.10,
 	}
+
+	if script.active_mods["space-exploration"] then
+		jetpack_fuels["bp-charged-holmium-battery"] = 1.05
+		jetpack_fuels["bp-charged-naquium-battery"] = 1.10
+	end
 
 	remote.add_interface("battery-powered", {
 		jetpack_fuels = function() return jetpack_fuels end,

@@ -3,6 +3,6 @@ if battery_powered.is_k2 and battery_powered.is_se then
     require("code.data.vehicle-fuel")
 end
 
-if deadlock and settings.startup["deadlock-enable-beltboxes"].value then
+if false and deadlock and settings.startup["deadlock-enable-beltboxes"].value then
     deadlock.add_stack("battery", battery_powered.icon_path .. "bp-stacked-battery.png", "deadlock-stacking-2", 64, "item", 4)
 end

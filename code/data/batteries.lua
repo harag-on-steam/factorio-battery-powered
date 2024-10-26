@@ -101,7 +101,9 @@ local create_battery = function (p)
         always_show_made_in = true,
         show_amount_in_title = false,
         always_show_products = true,
-        ingredients = {{ name, 1 }},
+        ingredients = {
+            { type="item", name = name, amount = 1 }
+        },
         -- recipes assume 1MW charger
         energy_required = p.fuel,
         hide_from_stats = true,

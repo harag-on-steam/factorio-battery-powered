@@ -2,11 +2,11 @@ local vehicles = {
 	locomotive = {
 		locomotive = true,
 		-- se-space-trains
-		["space-locomotive"] = true,
-		["bob-locomotive-2"] = true,
-		["bob-locomotive-3"] = true,
-		["bob-armoured-locomotive"] = true,
-		["bob-armoured-locomotive-2"] = true,
+		-- ["space-locomotive"] = true,
+		-- ["bob-locomotive-2"] = true,
+		-- ["bob-locomotive-3"] = true,
+		-- ["bob-armoured-locomotive"] = true,
+		-- ["bob-armoured-locomotive-2"] = true,
 	},
 	car = {
 		-- vanilla
@@ -14,24 +14,24 @@ local vehicles = {
 		tank = true,
 		-- AAI
 		-- ["vehicle-miner"] = true,
-		["vehicle-hauler"] = true,
-		["vehicle-warden"] = true,
-		["vehicle-chaingunner"] = true,
-		["vehicle-flame-tumbler"] = true,
-		["vehicle-flame-tank"] = true,
+		-- ["vehicle-hauler"] = true,
+		-- ["vehicle-warden"] = true,
+		-- ["vehicle-chaingunner"] = true,
+		-- ["vehicle-flame-tumbler"] = true,
+		-- ["vehicle-flame-tank"] = true,
 		-- K2
-		["kr-advanced-tank"] = true,
+		-- ["kr-advanced-tank"] = true,
 	},
 }
 
 local vehicle_matches = {
 	locomotive = {
 		-- Angel's Mass Transit
-		"^smelting%-locomotive",
-		"^petro%-locomotive",
-		"^crawler%-locomotive",
+		-- "^smelting%-locomotive",
+		-- "^petro%-locomotive",
+		-- "^crawler%-locomotive",
 		-- Better Train System
-		"^locomotive%-mk",
+		-- "^locomotive%-mk",
 	},
 	car = {
 		-- AAI
@@ -41,10 +41,10 @@ local vehicle_matches = {
 
 local supported_generators = {
 	-- K2
-	"small-portable-generator",
-	"portable-generator",
+	-- "small-portable-generator",
+	-- "portable-generator",
 	-- Portable Power Equipment 
-	"portable-generator-equipment",
+	-- "portable-generator-equipment",
 }
 
 local slot_count = settings.startup["battery-powered-burnt-inventory-size"].value
@@ -60,8 +60,8 @@ local function has_value(table, value)
 end
 
 local function modify_prototype(prototype)
-	local b = prototype.burner
-	if not b then return end
+	local b = prototype.energy_source
+	if not b or not b.type == "burner" then return end
 
 	if not b.fuel_categories then
 		b.fuel_categories = (b.fuel_category and { b.fuel_category }) or { "chemical" } -- the implicit default
