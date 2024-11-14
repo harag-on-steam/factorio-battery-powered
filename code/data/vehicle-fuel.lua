@@ -2,7 +2,7 @@ local vehicles = {
 	locomotive = {
 		locomotive = true,
 		-- se-space-trains
-		-- ["space-locomotive"] = true,
+		["space-locomotive"] = true,
 		-- ["bob-locomotive-2"] = true,
 		-- ["bob-locomotive-3"] = true,
 		-- ["bob-armoured-locomotive"] = true,
@@ -13,12 +13,13 @@ local vehicles = {
 		car = true,
 		tank = true,
 		-- AAI
-		-- ["vehicle-miner"] = true,
-		-- ["vehicle-hauler"] = true,
-		-- ["vehicle-warden"] = true,
-		-- ["vehicle-chaingunner"] = true,
-		-- ["vehicle-flame-tumbler"] = true,
-		-- ["vehicle-flame-tank"] = true,
+		["ironclad"] = true,
+		["vehicle-chaingunner"] = true,
+		["vehicle-flame-tumbler"] = true,
+		["vehicle-flame-tank"] = true,
+		["vehicle-hauler"] = true,
+		["vehicle-laser-tank"] = true,
+		["vehicle-warden"] = true,
 		-- K2
 		-- ["kr-advanced-tank"] = true,
 	},
@@ -27,9 +28,9 @@ local vehicles = {
 local vehicle_matches = {
 	locomotive = {
 		-- Angel's Mass Transit
-		-- "^smelting%-locomotive",
-		-- "^petro%-locomotive",
-		-- "^crawler%-locomotive",
+		"^smelting%-locomotive",
+		"^petro%-locomotive",
+		"^crawler%-locomotive",
 		-- Better Train System
 		-- "^locomotive%-mk",
 	},

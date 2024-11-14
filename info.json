@@ -1,6 +1,6 @@
 {
     "name": "battery-powered",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "title": "Battery Powered",
     "description": "Provides several tiers of batteries that can be used as fuel and to transport energy. The highest tiers require Space Exploration.",
     "author": "Harag",
@@ -8,24 +8,25 @@
     "factorio_version": "2.0",
     "dependencies": [
         "base",
-        "? jetpack"
+        "? angelsaddons-mobility",
+        "? aai-vehicles-chaingunner",
+        "? aai-vehicles-flame-tank",
+        "? aai-vehicles-flame-tumbler",
+        "? aai-vehicles-hauler",
+        "? aai-vehicles-ironclad",
+        "? aai-vehicles-laser-tank",
+        "? aai-vehicles-warden",
+        "(?) deadlock-beltboxes-loaders >= 2.5.0",
+        "(?) DeadlockStackingForVanilla",
+        "? jetpack",
+        "? se-space-trains"
     ],
     "disabled-dependencies": [
-        "? deadlock-beltboxes-loaders >= 2.4.0",
         "? space-exploration >= 0.5.0",
         "? Krastorio2",
         "? Krastorio2Assets",
         "? Portable_power",
         "? Deadlock-SE-bridge",
-        "(?) DeadlockStackingForVanilla",
-        "? angelsaddons-mobility",
-        "? se-space-trains",
-        "? aai-vehicles-chaingunner",
-        "? aai-vehicles-flame-tank",
-        "? aai-vehicles-flame-tumbler",
-        "? aai-vehicles-hauler",
-        "? aai-vehicles-laser-tank",
-        "? aai-vehicles-warden",
         "? better-train-system"
     ],
     "package": {

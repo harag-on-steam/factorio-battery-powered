@@ -5,7 +5,7 @@ require("code.data.batteries")
 require("code.data.chargers")
 require("code.data.vehicle-fuel")
 
-if false and deadlock and settings.startup["deadlock-enable-beltboxes"].value then
+if deadlock and settings.startup["deadlock-enable-beltboxes"].value then
     -- deadlock.add_stack("battery",...  needs data-final-fixes, other mods might have added a different stack icon
 
     if not battery_powered.is_k2 then
