@@ -64,7 +64,7 @@ local create_battery = function (p)
             { type = "item", name = name, amount = 1 }
         },
         order = "h[battery]-a-"..p.order,
-        category = "crafting-with-fluid",
+        category = p.recipe_category or "crafting-with-fluid",
         enabled = false,
         show_amount_in_title = false,
         ingredients = p.ingredients,
@@ -239,7 +239,28 @@ else
     }
 end
 
-if battery_powered.is_se then
+if battery_powered.is_sa then
+    create_battery({
+        prefix = "holmium",
+        tech = "electromagnetic-plant",
+        ingredients = {
+            {type = "item",  name = "supercapacitor", amount =   1},
+            {type = "item",  name = "holmium-plate",  amount =   1},
+            {type = "fluid", name = "electrolyte",    amount =  10},
+        },
+        probability = 0.995,
+        recipe_tint = {0xec, 0x69, 0xab},
+        recipe_category = "electromagnetics",
+        order = "c",
+        -- same energy density as rocket fuel, same acceleration and speed
+        stack = 20,
+        fuel = 50,
+        -- K2: more acceleration but less top speed than advanced fuel
+        acceleration = (is_k2_fuel_rebalance and 1.40) or 1.80,
+        top_speed = (is_k2_fuel_rebalance and 1.20) or 1.15,
+    })
+    
+elseif battery_powered.is_se then
 
     create_battery({
         prefix = "holmium",

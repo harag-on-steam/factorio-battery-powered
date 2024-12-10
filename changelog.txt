@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.2
+Date: 2024-12-10
+  Changes:
+    - Added holmium based batteries, chargers and generators available through the electromagnetic plant.
+  Bugfixes:
+    - Generator animation speed was too slow
+---------------------------------------------------------------------------------------------------
 Version: 2.0.1
 Date: 2024-11-14
   Changes:

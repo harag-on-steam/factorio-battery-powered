@@ -11,6 +11,7 @@ battery_powered.icon_mipmaps = 4
 
 local se_version = false -- ((mods and mods["space-exploration"]) or (game and game.active_mods["space-exploration"]))
 
+battery_powered.is_sa = ((mods and mods["space-age"]) or (script and script.active_mods["space-age"])) and true
 battery_powered.is_se = se_version and true
 battery_powered.is_se6 = false -- se_version and not string.find(se_version, "^0%.5%.")
 battery_powered.is_k2 = false -- ((mods and mods["Krastorio2"]) or (game and game.active_mods["Krastorio2"])) and true

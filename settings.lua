@@ -19,6 +19,7 @@ data:extend({
         setting_type = "startup",
         default_value = true,
         order = "a3",
+        hidden = true,
     },
     {
         type = "bool-setting",
@@ -26,6 +27,7 @@ data:extend({
         setting_type = "startup",
         default_value = true,
         order = "a4",
+        hidden = true,
     },
     {
         type = "int-setting",
@@ -50,5 +52,6 @@ data:extend({
         setting_type = "startup",
         default_value = true,
         order = "a7",
+        hidden = true,
     },
 })

@@ -1,5 +1,4 @@
-local is_se = mods["space-exploration"]
-local subgroup = is_se and "solar" or "energy"
+local subgroup = battery_powered.is_se and "solar" or "energy"
 
 local function charger_discharger_picture(prefix, is_discharger, repeat_count, tint)
     local typename = ((is_discharger and "dis") or "") .. "charger"
@@ -198,7 +197,7 @@ local charger_discharger = function(p)
         order = charger.order,
         subgroup = subgroup,
         results = {{type="item", name=charger_name, amount=1}},
-        category = "crafting",
+        category = p.recipe_category,
         enabled = false,
         ingredients = p.ingredients or p.ingredients_charger,
         energy_required = 8,
@@ -248,7 +247,7 @@ local charger_discharger = function(p)
           },
 
           drawing_box = {{-1, -1.5}, {1, 1}},
-          min_perceived_performance = 1,
+          perceived_performance = { minimum = 1 },
           idle_animation = charger_discharger_picture(prefix, true, 24),
           animation = discharger_anim(prefix),
           water_reflection = table.deepcopy(base.water_reflection),
@@ -286,7 +285,7 @@ local charger_discharger = function(p)
           order = discharger.order,
           subgroup = subgroup,
           results = {{type="item", name=discharger_name, amount=1}},
-          category = "crafting",
+          category = p.recipe_category,
           enabled = false,
           ingredients = p.ingredients or p.ingredients_discharger,
           energy_required = 8,
@@ -299,7 +298,7 @@ end
 
 charger_discharger({
     prefix = false,
-    next_prefix = is_se and "holmium",
+    next_prefix = (battery_powered.is_se or battery_powered.is_sa) and "holmium",
     based_on = "accumulator",
     order = "a",
     ingredients = {
@@ -307,12 +306,36 @@ charger_discharger({
         {type = "item", name = "electronic-circuit", amount = 2},
         {type = "item", name = "iron-plate", amount = 2},
     },
+    recipe_category = battery_powered.is_sa and "electronics" or "crafting-with-fluid",
     crafting_speed = 0.5,
     energy_usage = "500kW",
     tech = "electric-energy-accumulators",
 })
 
-if is_se then
+if battery_powered.is_sa then
+    charger_discharger({
+        prefix = "holmium",
+        based_on = "accumulator",
+        order = "b",
+        ingredients_charger = {
+            {type = "item", name = "supercapacitor",  amount = 4},
+            {type = "item", name = "superconductor",  amount = 8},
+            {type = "item", name = "processing-unit", amount = 1},
+            {type = "item", name = "holmium-plate",   amount = 5},
+        },
+        ingredients_discharger = {
+            {type = "item", name = "supercapacitor",  amount = 4},
+            {type = "item", name = "superconductor",  amount = 8},
+            {type = "item", name = "processing-unit", amount = 1},
+            {type = "item", name = "holmium-plate",   amount = 5},
+        },
+        recipe_category = "electromagnetics",
+        crafting_speed = 2,
+        energy_usage = "2MW",
+        tech = "electromagnetic-plant",
+    })
+
+elseif battery_powered.is_se then
     charger_discharger({
         prefix = "holmium",
         next_prefix = "naquium",
@@ -330,6 +353,7 @@ if is_se then
           {type = "item", name = "processing-unit", amount = 2},
           {type = "item", name = "bp-battery-discharger", amount = 1},
         },
+        recipe_category = "crafting-with-fluid",
         crafting_speed = 2.5,
         energy_usage = "2500kW",
         tech = "se-space-accumulator",
@@ -350,6 +374,7 @@ if is_se then
           {type = "item", name = "se-quantum-processor", amount = 1},
           {type = "item", name = "bp-holmium-battery-discharger", amount = 1},
         },
+        recipe_category = "crafting-with-fluid",
         order = "c",
         crafting_speed = 10,
         energy_usage = "10MW",

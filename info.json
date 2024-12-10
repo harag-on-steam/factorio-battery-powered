@@ -1,6 +1,6 @@
 {
     "name": "battery-powered",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "title": "Battery Powered",
     "description": "Provides several tiers of batteries that can be used as fuel and to transport energy. The highest tiers require Space Exploration.",
     "author": "Harag",
@@ -8,6 +8,7 @@
     "factorio_version": "2.0",
     "dependencies": [
         "base",
+        "? space-age",
         "? angelsaddons-mobility",
         "? aai-vehicles-chaingunner",
         "? aai-vehicles-flame-tank",
