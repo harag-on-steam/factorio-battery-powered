@@ -4,7 +4,6 @@
     "title": "Battery Powered",
     "description": "Provides several tiers of batteries that can be used as fuel and to transport energy. The highest tiers require Space Exploration.",
     "author": "Harag",
-    "contact": "none",
     "factorio_version": "2.0",
     "dependencies": [
         "base",
@@ -21,12 +20,12 @@
         "(?) DeadlockStackingForVanilla",
         "? jetpack",
         "? se-space-trains",
-        "? better-train-system"
+        "? better-train-system",
+        "? Krastorio2 >= 2.0.0",
+        "? Krastorio2Assets >= 2.0.1",
+        "? space-exploration >= 0.6.0"
     ],
     "disabled-dependencies": [
-        "? space-exploration >= 0.5.0",
-        "? Krastorio2",
-        "? Krastorio2Assets",
         "? Portable_power",
         "? Deadlock-SE-bridge"
     ],

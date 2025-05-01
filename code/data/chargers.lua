@@ -298,7 +298,7 @@ end
 
 charger_discharger({
     prefix = false,
-    next_prefix = (battery_powered.is_se or battery_powered.is_sa) and "holmium",
+    next_prefix = (battery_powered.is_se or battery_powered.is_age or battery_powered.is_k2) and "holmium",
     based_on = "accumulator",
     order = "a",
     ingredients = {
@@ -306,13 +306,13 @@ charger_discharger({
         {type = "item", name = "electronic-circuit", amount = 2},
         {type = "item", name = "iron-plate", amount = 2},
     },
-    recipe_category = battery_powered.is_sa and "electronics" or "crafting-with-fluid",
+    recipe_category = battery_powered.is_age and "electronics" or "crafting-with-fluid",
     crafting_speed = 0.5,
     energy_usage = "500kW",
     tech = "electric-energy-accumulators",
 })
 
-if battery_powered.is_sa then
+if battery_powered.is_age then
     charger_discharger({
         prefix = "holmium",
         based_on = "accumulator",
@@ -379,6 +379,23 @@ elseif battery_powered.is_se then
         crafting_speed = 10,
         energy_usage = "10MW",
         tech = "se-space-accumulator-2",
+    })
+
+elseif battery_powered.is_k2 then
+    charger_discharger({
+        prefix = "holmium",
+        based_on = "accumulator",
+        order = "b",
+        ingredients = {
+            {type = "item", name = "kr-rare-metals", amount = 10},
+            {type = "item", name = "processing-unit", amount = 2},
+            {type = "item", name = "kr-steel-beam", amount = 5},
+            {type = "item", name = "kr-energy-control-unit", amount = 5},
+        },
+        recipe_category = "crafting-with-fluid",
+        crafting_speed = 3,
+        energy_usage = "3MW",
+        tech = "kr-energy-storage",
     })
 end
 

@@ -1,3 +1,5 @@
+require("code.globals")
+
 local function sync_recipes_with_research()
 	local recipes_by_tech = {
 		["electric-energy-accumulators"] = {
@@ -8,7 +10,7 @@ local function sync_recipes_with_research()
 			"bp-charged-advanced-battery",
 		},
 		["kr-lithium-sulfur-battery"] = {
-			"bp-charged-lithium-sulfur-battery",
+			"bp-charged-kr-lithium-sulfur-battery",
 		},
 		["se-space-accumulator"] = {
 			"bp-holmium-battery-charger",
@@ -40,20 +42,16 @@ local function sync_recipes_with_research()
 end
 
 if settings.startup["battery-powered-jetpack-fuel"].value then
-	local mk2_battery = "bp-charged-"..(script.active_mods["Krastorio2"] and "lithium-sulfur" or "advanced").."-battery"
-
-	local jetpack_fuels = {
+	local fuels = {
 		["bp-charged-battery"] = 1,
-		[mk2_battery] = 1,
+		["bp-charged-advanced-battery"] = (not battery_powered.is_k2) and 1 or nil,
+		["bp-charged-kr-lithium-sulfur-battery"] = battery_powered.is_k2 and 1 or nil,
+		["bp-charged-holmium-battery"] = (battery_powered.is_age or battery_powered.is_se) and 1.05 or nil,
+		["bp-charged-naquium-battery"] = battery_powered.is_se and 1.10 or nil,
 	}
 
-	if script.active_mods["space-exploration"] then
-		jetpack_fuels["bp-charged-holmium-battery"] = 1.05
-		jetpack_fuels["bp-charged-naquium-battery"] = 1.10
-	end
-
 	remote.add_interface("battery-powered", {
-		jetpack_fuels = function() return jetpack_fuels end,
+		jetpack_fuels = function() return fuels end,
 	})
 end
 

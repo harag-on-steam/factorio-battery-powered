@@ -21,7 +21,7 @@ local vehicles = {
 		["vehicle-laser-tank"] = true,
 		["vehicle-warden"] = true,
 		-- K2
-		-- ["kr-advanced-tank"] = true,
+		["kr-advanced-tank"] = true,
 	},
 }
 
@@ -42,8 +42,8 @@ local vehicle_matches = {
 
 local supported_generators = {
 	-- K2
-	-- "small-portable-generator",
-	-- "portable-generator",
+	"kr-small-portable-generator-equipment",
+	"kr-portable-generator-equipment",
 	-- Portable Power Equipment 
 	-- "portable-generator-equipment",
 }
@@ -62,7 +62,10 @@ end
 
 local function modify_prototype(prototype)
 	local b = prototype.energy_source
-	if not b or not b.type == "burner" then return end
+	if not b or b.type ~= "burner" then
+		b = prototype.burner -- for generator equipment
+		if not b or b.type ~= "burner" then return end
+	end
 
 	if not b.fuel_categories then
 		b.fuel_categories = (b.fuel_category and { b.fuel_category }) or { "chemical" } -- the implicit default

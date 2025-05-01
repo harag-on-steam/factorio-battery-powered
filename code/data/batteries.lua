@@ -5,19 +5,18 @@ data:extend({
 
 local data_util = mods["space-exploration"] and require("__space-exploration__.data_util")
 local is_decay = settings.startup["battery-powered-decay"].value
-local is_k2_fuel_rebalance = battery_powered.is_k2 and settings.startup["kr-rebalance-fuels"].value and settings.startup["battery-powered-k2-fuel-rebalance"].value
 
 -- SE defines this globally so adding to it is enough to create a capsule
 se_delivery_cannon_recipes = se_delivery_cannon_recipes or {}
 
 local group = "intermediate-products"
-local subgroup = (battery_powered.is_se6 and "electronic") or "intermediate-product"
+local subgroup = (battery_powered.is_se and "electronic") or "intermediate-product"
 
-local group_charged = (battery_powered.is_se6 and "resource") or "intermediate-products"
-local subgroup_charged = (battery_powered.is_se6 and "fuel") or (battery_powered.is_se and "processed-fuel") or "intermediate-product"
+local group_charged = (battery_powered.is_se and "resource") or "intermediate-products"
+local subgroup_charged = (battery_powered.is_se and "fuel") or "intermediate-product"
 
-local order = (battery_powered.is_se6 and "f") or "h[battery]-"
-local order_charged = (battery_powered.is_se6 and "q") or "h[battery]-"
+local order = (battery_powered.is_se and "f") or "h[battery]-"
+local order_charged = (battery_powered.is_se and "q") or "h[battery]-"
 
 -- change existing items
 
@@ -26,7 +25,7 @@ base_battery.order = order.."a-a"
 base_battery.subgroup = subgroup
 
 if battery_powered.is_k2 then
-    battery = data.raw.item["lithium-sulfur-battery"]
+    battery = data.raw.item["kr-lithium-sulfur-battery"]
     battery.group = group
     battery.subgroup = subgroup
     battery.order = order.."a-b"
@@ -35,14 +34,17 @@ end
 -- function to define new items and recipes
 
 local create_battery = function (p)
-    local name, name_charged
+    local name, name_charged, weight
 
     if not p.use then
         name = "bp-"..p.prefix.."-battery"
         name_charged = "bp-charged-"..p.prefix.."-battery"
-    else 
+        weight = p.weight
+    else
         name = p.use
         name_charged = "bp-charged-"..(p.prefix and (p.prefix .. "-") or "").."battery"
+        local used_item = data.raw.item[p.use]
+        weight = used_item.weight or p.weight
     end
 
     local battery = {
@@ -55,6 +57,7 @@ local create_battery = function (p)
         group = group,
         subgroup = subgroup,
         order = order.."a-"..p.order,
+        weight = weight,
     }
 
     local produce_battery = {
@@ -87,6 +90,7 @@ local create_battery = function (p)
         fuel_emissions_multiplier = 0,
         fuel_acceleration_multiplier = p.acceleration,
         fuel_top_speed_multiplier = p.top_speed,
+        weight = weight,
     }
 
     local charge_battery = {
@@ -121,7 +125,6 @@ local create_battery = function (p)
     end
 
     if battery_powered.is_se and p.scrap then
-
         local scrap_battery = {
             type = "recipe",
             name = string.gsub(name, "^bp", "bp-recycle"),
@@ -141,7 +144,7 @@ local create_battery = function (p)
             results = p.scrap,
             -- order = "h[battery]-a-"..p.order,
             category = "hard-recycling",
-            subgroup = battery_powered.is_se6 and "recycling" or subgroup,
+            subgroup = battery_powered.is_se and "recycling" or subgroup,
             enabled = false,
             ingredients = {{type = "item", name = name, amount = 1}},
             energy_required = 4,
@@ -168,10 +171,10 @@ create_battery({
     order = "a",
     -- a little better than coal :-)
     stack = 50,
-    fuel = 5,
-    -- K2: slightly better than solid fuel
-    acceleration = (is_k2_fuel_rebalance and 0.85) or 1.10,
-    top_speed = (is_k2_fuel_rebalance and 0.75) or 1.05,
+    fuel = (battery_powered.is_k2 and 15) or 5, -- compensate for the huge fuel stack size in K2
+    acceleration = 1.10,
+    top_speed = (battery_powered.is_k2 and 0.95) or 1.05,
+    weight = 5 * kg,
 })
 
 if not battery_powered.is_k2 then
@@ -192,33 +195,33 @@ if not battery_powered.is_k2 then
         probability = 0.99,
         recipe_tint = {0xE6,0xBA,0x39},
         order = "b",
-        -- 2MJ less energy density than solid fuel, .2 more acceleration, .05 more speed
+        -- 2MJ less energy density than solid fuel, 20% more acceleration, 5% more speed
         stack = 50,
         fuel = 10,
         acceleration = 1.4,
         top_speed = 1.10,
+        weight = 2.5 * kg,
     })
 else
     create_battery({
-        use = "lithium-sulfur-battery",
-        prefix = "lithium-sulfur",
+        use = "kr-lithium-sulfur-battery",
+        prefix = "kr-lithium-sulfur",
         tech = "kr-lithium-sulfur-battery",
         probability = 0.99,
         recipe_tint = {0xE6,0xBA,0x39},
         order = "b",
-        -- 2MJ less energy density than solid fuel, .2 more acceleration, .05 more speed
+        -- compared to K2 advanced fuel: 50% density (200x15), +25% acceleration (1.25), -10% top speed (1.25)
         stack = 50,
-        fuel = battery_powered.is_se and 10 or 40, -- K2 has 40MJ with IR2 charging, replicate that for K2 without SE
-        -- K2: more acceleration but less top speed and range than normal fuel
-        acceleration = (is_k2_fuel_rebalance and 1.10) or 1.4,
-        top_speed = (is_k2_fuel_rebalance and 0.95) or 1.10,
+        fuel = 30,
+        acceleration = 1.50,
+        top_speed = 1.15,
+        weight = 2.5 * kg,
     })
 
-    local charged = data.raw.item["bp-charged-lithium-sulfur-battery"]
+    local charged = data.raw.item["bp-charged-kr-lithium-sulfur-battery"]
     -- straight out of  __Krastorio2__/compatibility-scripts/data-final-fixes/IndustrialRevolution.lua
     charged.icon = battery_powered.k2_path .. "compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png"
     charged.icon_size = 64
-    charged.icon_mipmaps = 4
     charged.pictures = {
         layers = {
             {
@@ -226,7 +229,7 @@ else
                 filename = battery_powered.k2_path .. "compatibility/IndustrialRevolution/charged-lithium-sulfur-battery.png",
                 scale = 0.25,
                 mipmap_count = 4,
-            }, 
+            },
             {
                 draw_as_light = true,
                 flags = { "light" },
@@ -239,7 +242,7 @@ else
     }
 end
 
-if battery_powered.is_sa then
+if battery_powered.is_age then
     create_battery({
         prefix = "holmium",
         tech = "electromagnetic-plant",
@@ -256,12 +259,12 @@ if battery_powered.is_sa then
         stack = 20,
         fuel = 50,
         -- K2: more acceleration but less top speed than advanced fuel
-        acceleration = (is_k2_fuel_rebalance and 1.40) or 1.80,
-        top_speed = (is_k2_fuel_rebalance and 1.20) or 1.15,
+        acceleration = 1.80,
+        top_speed = 1.15,
+        weight = 2 * kg,
     })
-    
-elseif battery_powered.is_se then
 
+elseif battery_powered.is_se then
     create_battery({
         prefix = "holmium",
         tech = "se-space-accumulator",
@@ -269,11 +272,7 @@ elseif battery_powered.is_se then
             {type = "item",  name = "se-heat-shielding", amount =   1},
             {type = "item",  name = "glass",             amount =   1},
             {type = "item",  name = "se-holmium-plate",  amount =   2},
-            
-            battery_powered.is_se6 and
-            {type = "fluid", name = "se-vitalic-acid",   amount =  10} or
-            {type = "item",  name = "se-vitalic-acid",   amount =   1},
-
+            {type = "fluid", name = "se-vitalic-acid",   amount =  10},
             {type = "fluid", name = "se-ion-stream",     amount =  20},
         },
         scrap = {
@@ -287,9 +286,9 @@ elseif battery_powered.is_se then
         -- same energy density as rocket fuel, same acceleration and speed
         stack = 20,
         fuel = 50,
-        -- K2: more acceleration but less top speed than advanced fuel
-        acceleration = (is_k2_fuel_rebalance and 1.40) or 1.80,
-        top_speed = (is_k2_fuel_rebalance and 1.20) or 1.15,
+        acceleration = 1.80,
+        top_speed = 1.15,
+        weight = 2 * kg,
     })
 
     create_battery({
@@ -313,9 +312,9 @@ elseif battery_powered.is_se then
         -- 800MJ higher energy density than nuclear fuel, .3 less acceleration, same speed
         stack = 20,
         fuel = 100,
-        -- K2: more acceleration than advanced fuel
-        acceleration = (is_k2_fuel_rebalance and 1.80) or 2.20,
-        top_speed = (is_k2_fuel_rebalance and 1.25) or 1.15,
+        acceleration = 2.20,
+        top_speed = 1.15,
+        weight = 1.5 * kg,
     })
-    
+
 end
