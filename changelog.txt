@@ -2,7 +2,7 @@
 Version: 2.0.2
 Date: 2024-12-10
   Changes:
-    - Added holmium based batteries, chargers and generators available through the electromagnetic plant.
+    - [space-age] Added holmium based batteries, chargers and generators available through the electromagnetic plant.
   Bugfixes:
     - Generator animation speed was too slow
 ---------------------------------------------------------------------------------------------------
