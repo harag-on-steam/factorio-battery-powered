@@ -32,7 +32,7 @@ local vehicle_matches = {
 		"^petro%-locomotive",
 		"^crawler%-locomotive",
 		-- Better Train System
-		-- "^locomotive%-mk",
+		"^locomotive%-mk",
 	},
 	car = {
 		-- AAI

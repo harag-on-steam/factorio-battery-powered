@@ -1,6 +1,6 @@
 {
     "name": "battery-powered",
-    "version": "2.0.1",
+    "version": "2.0.3",
     "title": "Battery Powered",
     "description": "Provides several tiers of batteries that can be used as fuel and to transport energy. The highest tiers require Space Exploration.",
     "author": "Harag",
@@ -20,15 +20,15 @@
         "(?) deadlock-beltboxes-loaders >= 2.5.0",
         "(?) DeadlockStackingForVanilla",
         "? jetpack",
-        "? se-space-trains"
+        "? se-space-trains",
+        "? better-train-system"
     ],
     "disabled-dependencies": [
         "? space-exploration >= 0.5.0",
         "? Krastorio2",
         "? Krastorio2Assets",
         "? Portable_power",
-        "? Deadlock-SE-bridge",
-        "? better-train-system"
+        "? Deadlock-SE-bridge"
     ],
     "package": {
         "ignore": [".git", ".github", ".vscode", ".kakrc", "*.xcf", "*.kra"]
