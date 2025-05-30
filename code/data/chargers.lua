@@ -1,5 +1,7 @@
 local subgroup = battery_powered.is_se and "solar" or "energy"
 
+local perf_multiplier = settings.startup["battery-powered-discharger-performance"].value --[[@as double]]
+
 local function charger_discharger_picture(prefix, is_discharger, repeat_count, tint)
     local typename = ((is_discharger and "dis") or "") .. "charger"
     local filename = prefix .. typename
@@ -31,8 +33,8 @@ local function charger_discharger_picture(prefix, is_discharger, repeat_count, t
         },
       }
     }
-  end
-  
+end
+
 local function charger_anim(prefix)
     return
     {
@@ -68,9 +70,9 @@ local function charger_anim(prefix)
 
       }
     }
-  end
-  
- local function discharger_anim(prefix)
+end
+
+local function discharger_anim(prefix)
     return
     {
       layers =
@@ -111,9 +113,9 @@ local function charger_anim(prefix)
         -- naquium brighter tint = { r = 0.65, g = 0.60, b = 1.0, a = 1 }
       }
     }
-  end
+end
 
-local charger_discharger = function(p)
+local function charger_discharger(p)
     local base = data.raw.accumulator[p.based_on]
 
     local prefix = ""
@@ -143,13 +145,13 @@ local charger_discharger = function(p)
         collision_box = {{-0.9, -0.9}, {0.9, 0.9}},
         selection_box = {{-1, -1}, {1, 1}},
         damaged_trigger_effect = table.deepcopy(base.damaged_trigger_effect),
-        crafting_speed = p.crafting_speed,
+        crafting_speed = math.floor(p.crafting_speed * perf_multiplier * 1000) / 1000,
         source_inventory_size = 1,
         result_inventory_size = 1,
         show_recipe_icon = false,
         crafting_categories = { "charging" },
         order = "z-battery-charger-"..p.order,
-        energy_usage = p.energy_usage,
+        energy_usage = math.floor(p.crafting_speed * perf_multiplier * 1000).."kW",
         energy_source = {
             type = "electric",
             usage_priority = "secondary-input",
@@ -233,7 +235,7 @@ local charger_discharger = function(p)
               usage_priority = "tertiary",
               drain = "0kW",
           },
-          max_power_output = p.energy_usage,
+          max_power_output = math.floor(p.crafting_speed * perf_multiplier * 1000).."kW",
           burner = {
               emissions_per_minute = {},
               fuel_categories = {"battery"},
@@ -308,7 +310,6 @@ charger_discharger({
     },
     recipe_category = battery_powered.is_age and "electronics" or "crafting-with-fluid",
     crafting_speed = 0.5,
-    energy_usage = "500kW",
     tech = "electric-energy-accumulators",
 })
 
@@ -331,7 +332,6 @@ if battery_powered.is_age then
         },
         recipe_category = "electromagnetics",
         crafting_speed = 2,
-        energy_usage = "2MW",
         tech = "electromagnetic-plant",
     })
 
@@ -355,7 +355,6 @@ elseif battery_powered.is_se then
         },
         recipe_category = "crafting-with-fluid",
         crafting_speed = 2.5,
-        energy_usage = "2500kW",
         tech = "se-space-accumulator",
     })
 
@@ -377,7 +376,6 @@ elseif battery_powered.is_se then
         recipe_category = "crafting-with-fluid",
         order = "c",
         crafting_speed = 10,
-        energy_usage = "10MW",
         tech = "se-space-accumulator-2",
     })
 
@@ -394,7 +392,6 @@ elseif battery_powered.is_k2 then
         },
         recipe_category = "crafting-with-fluid",
         crafting_speed = 3,
-        energy_usage = "3MW",
         tech = "kr-energy-storage",
     })
 end
